@@ -4,9 +4,9 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --environment=development",
-    "dev": "ng serve --environment=development",
-    "prod": "ng serve --environment=production",
+    "start": "ng serve --port 5555",
+    "dev": "ng serve --dev --port 5000",
+    "prod": "ng serve --prod --port 5000",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

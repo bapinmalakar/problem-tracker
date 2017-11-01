@@ -8,7 +8,7 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent {
   title = 'app';
- constructor(){
-   console.log('Mode is: ', environment.mode);
- }
+  constructor() {
+    console.log('Mode is: ', environment.mode);
+  }
 }
