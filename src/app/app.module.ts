@@ -14,6 +14,7 @@ import { HomeModule } from './home/home.module';
 
 //services
 import { UserService } from './shared/services/guard/user.service';
+import { UserModelService } from './shared/services/user.service';
 
 
 @NgModule({
@@ -22,7 +23,7 @@ import { UserService } from './shared/services/guard/user.service';
     LoginComponent,
     DefaultPageComponent
   ],
-  providers: [UserService],
+  providers: [UserService, UserModelService],
   imports: [
     BrowserModule,
     FormsModule,
