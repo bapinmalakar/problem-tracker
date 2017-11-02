@@ -1,3 +1,87 @@
-<p>
-  login works!
-</p>
+<div class="container" style="margin-left: 1%;">
+  <div class="col-lg-5 col-md-5 col-sm-5">
+    <h1 class="row" style="margin-top: 30%;">Authorized Your self</h1>
+    <div class="row">
+      <div class="form-group" style="margin-top: 10%;">
+        <div class="input-group">
+          <span class="input-group-addon">
+            <i class="glyphicon glyphicon-user"></i>
+          </span>
+          <input type="text" placeholder="email (required)" class="form-control">
+        </div>
+        <p class="errorP">Email Valid</p>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">
+            <i class="glyphicon glyphicon-lock"></i>
+          </span>
+          <input type="password" placeholder="password (required)" class="form-control">
+        </div>
+        <p class="errorP">Password Valid</p>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" type="button">Signin</button>
+        <a href="javascript:void(0);" class="btn btn-warning">Forgot Password</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-1 col-md-1 col-sm-1" style="height: 100vh;">
+    <hr style="height: 100vh;">
+  </div>
+  <div class="col-lg-5 col-md-5 col-sm-5" style="height: 100vh;">
+    <h1 class="row" style="text-align: center; margin-top: 30%;">REGISTRATION FORM</h1>
+    <div class="row" style="margin-left: 6%;">
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon" style="color: green;">
+            <i class="glyphicon glyphicon-user"></i>
+          </span>
+          <input type="text" class="form-control" placeholder="First name (required)" [(ngModel)]="userModel.firstName">
+        </div>
+        <p class="err">{{errorText.fname}}</p>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon" style="color: green;">
+            <i class="glyphicon glyphicon-user"></i>
+          </span>
+          <input type="text" class="form-control" placeholder="Last name (optional)" [(ngModel)]="userModel.lastName">
+        </div>
+        <p class="err">{{errorText.lname}}</p>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon" style="color: green;">
+            <i class="glyphicon glyphicon-envelope"></i>
+          </span>
+          <input type="email" placeholder="email(required)" class="form-control" [(ngModel)]="userModel.email">
+        </div>
+        <p class="err">{{errorText.email}}</p>
+      </div>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon" style="color: green;">
+            <i class="glyphicon glyphicon-eye-close"></i>
+          </span>
+          <input type="password" placeholder="Password(required)" class="form-control" [(ngModel)]="userModel.password">
+        </div>
+        <p class="err">{{errorText.password}}</p>
+      </div>
+      <div class="form-group">
+        <div class="radio">
+          <label>
+            <input class="radio-inline" (click)="selectGender('Male')" name="gen" type="radio">Mal</label>
+          <label>
+            <input class="radio-inline" (click)="selectGender('Female')" name="gen" type="radio">Fem</label>
+          <label>
+            <input class="radio-inline" (click)="selectGender('Other')" name="gen" type="radio">Oth</label>
+        </div>
+        <p class="err">{{errorText.gender}}</p>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-danger" (click)="register()">Signup</button>
+      </div>
+    </div>
+  </div>
+</div>

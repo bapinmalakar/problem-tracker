@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 //components
 import { AppComponent } from './app.component';
@@ -15,6 +16,8 @@ import { HomeModule } from './home/home.module';
 //services
 import { UserService } from './shared/services/guard/user.service';
 import { UserModelService } from './shared/services/user.service';
+import { UserAuthService } from './shared/services/userAuth.service';
+import { ValidationService } from './shared/services/validation.service';
 
 
 @NgModule({
@@ -23,10 +26,11 @@ import { UserModelService } from './shared/services/user.service';
     LoginComponent,
     DefaultPageComponent
   ],
-  providers: [UserService, UserModelService],
+  providers: [UserService, UserModelService, UserAuthService, ValidationService],
   imports: [
     BrowserModule,
     FormsModule,
+    HttpModule,
     AppRoutingModule,
     HomeModule
   ],
