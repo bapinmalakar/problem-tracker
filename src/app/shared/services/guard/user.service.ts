@@ -6,7 +6,7 @@ export class UserService implements CanActivate {
 
   constructor(private _navigate: Router) { }
   canActivate() {
-    if (!localStorage.getItem('problemTracker')) {
+    if (!localStorage.getItem('problemTrackerDetails')) {
       alert('Not Found');
       this._navigate.navigate(['/errorpage']);
       return false;

@@ -18,4 +18,14 @@ export class UserAuthService extends HttpBase {
                 return this.handelError(err);
             });
     }
+    resendCode(id) {
+        return this._http.get(this._url + environment.version + '/user/' + id + '/resend_code', this.getGetOption())
+            .map(this.extractData)
+            .catch(this.handelError);
+    }
+    verifyCode(id, pin) {
+        return this._http.post(this._url + environment.version + '/user/' + id + '/activate-account', { pin }, this.getPostOption())
+            .map(this.extractData)
+            .catch(this.handelError);
+    }
 }
