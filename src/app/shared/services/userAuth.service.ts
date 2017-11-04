@@ -28,4 +28,9 @@ export class UserAuthService extends HttpBase {
             .map(this.extractData)
             .catch(this.handelError);
     }
+    laterActivatePin(id) {
+        return this._http.get(this._url + environment.version + '/user/' + id + '/get_code_active', this.getGetOption())
+            .map(this.extractData)
+            .catch(this.handelError);
+    }
 }

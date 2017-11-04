@@ -25,6 +25,10 @@ export class LoginComponent implements OnInit {
   activePin = '';
   pinError = '';
   userId: any = '';
+  laterModelShow = false;
+  laterEmail = '';
+  emailError = '';
+  laterSendText = 'Send Pin';
   errorText: any = {
     fname: '',
     lname: '',
@@ -37,9 +41,7 @@ export class LoginComponent implements OnInit {
     public navigate: Router) { }
 
   ngOnInit() {
-    this.validation = false;
-    this.modelShow = false;
-    this.userId = '';
+    this.initValue();
     this.refreshAcivateModel();
   }
 
@@ -192,8 +194,12 @@ export class LoginComponent implements OnInit {
       this.errorText.gender = 'Please select gender';
     }
   }
-  closeModal() {
-    this.modelShow = false;
+  closeModal(val) {
+    if (val == 'V') {
+      this.modelShow = false;
+    } else if (val == 'L') {
+      this.laterModelShow = false;
+    }
   }
   resendCode() {
     this.resendText = 'Sending...';
@@ -242,5 +248,46 @@ export class LoginComponent implements OnInit {
     this.verifyText = 'Verify';
     this.resendText = 'Resend';
     this.pinError = '';
+  }
+  laterModel() {
+    this.laterEmail = '';
+    this.emailError = '';
+    this.laterSendText = 'Send Pin';
+    this.laterModelShow = true;
+  }
+  initValue() {
+    this.validation = false;
+    this.modelShow = false;
+    this.userId = '';
+    this.laterModelShow = false;
+    this.laterEmail = '';
+    this.emailError = '';
+    this.laterSendText = 'Send Pin';
+  }
+  sendActivatePin() {
+    if (!this.laterEmail) {
+      this.emailError = 'Enter register email';
+    } else if (this._validationService.emailValidation(this.laterEmail)) {
+      this.laterSendText = 'Processing...';
+      this.emailError = '';
+      let self = this;
+      this._userAuthService.laterActivatePin(this.laterEmail)
+        .subscribe(result => {
+          console.log('Result is: ', result);
+          self.laterSendText = 'Send Pin';
+          self.laterModelShow = false;
+          self.modelShow = true;
+          self.userId = result._id;
+          self.refreshAcivateModel();
+        }, err => {
+          console.log('Error: ', err);
+          if (err.error.code === 'E_USER_NOT_FOUND_ERROR') {
+            self.emailError = 'This email not valid!';
+          }
+          self.laterSendText = 'Send Pin';
+        });
+    } else {
+      this.emailError = 'Enter valid email please';
+    }
   }
 }
