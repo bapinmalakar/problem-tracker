@@ -347,7 +347,6 @@ export class LoginComponent implements OnInit {
           this.loginError = false;
           this.loginErr = '';
           this.loginText = 'Signin';
-
         }, err => {
           this.loginError = true;
           if (err.error.code == 'E_USER_NOT_FOUND_ERROR' && err.error.message == 'Invalid username') {
