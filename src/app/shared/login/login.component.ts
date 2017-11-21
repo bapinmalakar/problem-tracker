@@ -1,8 +1,10 @@
+import { User } from './../models/user';
+import { environment } from './../../../environments/environment';
+import { CookieService } from './../cookies.service';
 import { Component, OnInit } from '@angular/core';
 import { UserAuthService } from './../services/userAuth.service';
 import { ValidationService } from './../services/validation.service';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,6 +19,16 @@ export class LoginComponent implements OnInit {
     password: '',
     cpassword: ''
   };
+  loginObject: any = {
+    user: '',
+    password: '',
+    passErr: '',
+    userErr: ''
+  };
+  loginErr: any = '';
+  loginError: any = false;
+  loginValid: any = false;
+  loginText: any = 'Signin';
   signupText: any = 'Register';
   resendText: any = 'Resend';
   verifyText: any = 'Verify';
@@ -38,7 +50,7 @@ export class LoginComponent implements OnInit {
     cpassword: ''
   };
   constructor(public _userAuthService: UserAuthService, public _validationService: ValidationService,
-    public navigate: Router) { }
+    public navigate: Router, public _cookieService: CookieService) { }
 
   ngOnInit() {
     this.initValue();
@@ -47,9 +59,7 @@ export class LoginComponent implements OnInit {
 
   register() {
     this.signupText = 'Proccessing...';
-    console.log('User Model: ', this.userModel);
     if (!this.validation) {
-      console.log('Inside');
       this.firstnameValidation();
       this.lastnameValidation();
       this.emailaddVlidation();
@@ -69,14 +79,12 @@ export class LoginComponent implements OnInit {
       let self = this;
       this._userAuthService.registerUser(this.userModel)
         .subscribe(result => {
-          console.log('Result is: ', result);
           self.userId = result._id;
           self.signupText = 'Register';
           self.modelShow = true;
           self.refreshAcivateModel();
         },
         err => {
-          //console.log('Registration error: ', err);
           self.signupText = 'Register';
           if (err.error.code == 'E_DUPLICACY_ERROR') {
             self.errorText.email = err.error.message;
@@ -229,7 +237,7 @@ export class LoginComponent implements OnInit {
           console.log('Result is: ', result);
           self.verifyText = 'Verify';
           self.modelShow = false;
-          localStorage.setItem('problemTrackerDetails', JSON.stringify(result));
+          this._cookieService.getCookie(environment.userCookie);
           self.navigate.navigate(['home']);
         }, err => {
           console.log('Verify error: ', err);
@@ -256,6 +264,7 @@ export class LoginComponent implements OnInit {
     this.laterModelShow = true;
   }
   initValue() {
+    this.loginValid = false;
     this.validation = false;
     this.modelShow = false;
     this.userId = '';
@@ -289,5 +298,67 @@ export class LoginComponent implements OnInit {
     } else {
       this.emailError = 'Enter valid email please';
     }
+  }
+  loginEmail() {
+    if (this.loginValid) {
+      if (!this.loginObject.user) {
+        this.loginObject.userErr = 'User-id required';
+      } else if (!this._validationService.emailValidation(this.loginObject.user)) {
+        this.loginObject.userErr = 'Kindly enter valid user-id required';
+      } else {
+        this.loginObject.userErr = '';
+      }
+    }
+  }
+  loginPass() {
+    if (this.loginValid) {
+      if (!this.loginObject.password) {
+        this.loginObject.passErr = 'User-id required';
+      } else if (this._validationService.passwordValidation(this.loginObject.password) == 1) {
+        this.loginObject.passErr = 'Kindly enter valid user-id required';
+      } else {
+        this.loginObject.passErr = '';
+      }
+    }
+  }
+  login() {
+    this.loginText = 'Processing...';
+    if (!this.loginValid) {
+      if (!this.loginObject.user) {
+        this.loginObject.userErr = 'User-id required';
+      } else if (!this._validationService.emailValidation(this.loginObject.user)) {
+        this.loginObject.userErr = 'Kindly type valid user-id required';
+      } else {
+        this.loginObject.userErr = '';
+      }
+
+      if (!this.loginObject.password) {
+        this.loginObject.passErr = 'Password required';
+      } else if (this._validationService.passwordValidation(this.loginObject.password) == 1) {
+        this.loginObject.passErr = 'Kindly enter valid password';
+      } else {
+        this.loginObject.passErr = '';
+      }
+      this.loginValid = true;
+    }
+    if (!this.loginObject.passErr && !this.loginObject.userErr) {
+      this._userAuthService.userLogin({ username: this.loginObject.user, password: this.loginObject.password })
+        .subscribe(result => {
+          this.loginError = false;
+          this.loginErr = '';
+          this.loginText = 'Signin';
+
+        }, err => {
+          this.loginError = true;
+          if (err.error.code == 'E_USER_NOT_FOUND_ERROR' && err.error.message == 'Invalid username') {
+            this.loginErr = 'Invalid user-id';
+          } else if (err.error.code == 'E_USER_NOT_FOUND_ERROR' && err.error.message == 'Invalid password') {
+            this.loginErr = 'Invalid password';
+          } else {
+            this.loginErr = 'Internal error. Kindly try again!';
+          }
+          this.loginText = 'Signin';
+        });
+    } else { this.loginText = 'Signin'; }
   }
 }

@@ -18,6 +18,7 @@ import { UserService } from './shared/services/guard/user.service';
 import { UserModelService } from './shared/services/user.service';
 import { UserAuthService } from './shared/services/userAuth.service';
 import { ValidationService } from './shared/services/validation.service';
+import { CookieService } from './shared/cookies.service';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { ValidationService } from './shared/services/validation.service';
     LoginComponent,
     DefaultPageComponent
   ],
-  providers: [UserService, UserModelService, UserAuthService, ValidationService],
+  providers: [UserService, UserModelService, UserAuthService, ValidationService, CookieService],
   imports: [
     BrowserModule,
     FormsModule,

@@ -13,10 +13,7 @@ export class UserAuthService extends HttpBase {
     registerUser(data) {
         return this._http.post(this._url + environment.version + '/user/sign', data, this.getPostOption())
             .map(this.extractData)
-            .catch(err => {
-                console.log('Error is: ', err);
-                return this.handelError(err);
-            });
+            .catch(this.handelError) ;
     }
     resendCode(id) {
         return this._http.get(this._url + environment.version + '/user/' + id + '/resend_code', this.getGetOption())
@@ -30,6 +27,11 @@ export class UserAuthService extends HttpBase {
     }
     laterActivatePin(id) {
         return this._http.get(this._url + environment.version + '/user/' + id + '/get_code_active', this.getGetOption())
+            .map(this.extractData)
+            .catch(this.handelError);
+    }
+    userLogin(obj) {
+        return this._http.post(this._url + environment.version + '/user/login', obj, this.getPostOption())
             .map(this.extractData)
             .catch(this.handelError);
     }
