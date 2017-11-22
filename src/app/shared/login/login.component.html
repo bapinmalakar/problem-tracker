@@ -8,7 +8,7 @@
           <span class="input-group-addon">
             <i class="glyphicon glyphicon-user"></i>
           </span>
-          <input type="text" placeholder="email (required)" class="form-control" [(ngModel)]="loginObject.user" (keyup)="loginEmail()">
+          <input type="text" name="userEmail" autocomplete="on" placeholder="email (required)" class="form-control" [(ngModel)]="loginObject.user" (keyup)="loginEmail()">
         </div>
         <p class="err">{{loginObject.userErr}}</p>
       </div>
@@ -39,7 +39,7 @@
           <span class="input-group-addon" style="color: green;">
             <i class="glyphicon glyphicon-user"></i>
           </span>
-          <input type="text" class="form-control" placeholder="First name (required)" (keyup)="validationFun('fname')" [(ngModel)]="userModel.firstName"
+          <input type="text" name="firstName"autocomplete="on"  class="form-control" placeholder="First name (required)" (keyup)="validationFun('fname')" [(ngModel)]="userModel.firstName"
             autocomplete="on">
         </div>
         <p class="err">{{errorText.fname}}</p>
@@ -49,7 +49,7 @@
           <span class="input-group-addon" style="color: green;">
             <i class="glyphicon glyphicon-user"></i>
           </span>
-          <input type="text" class="form-control" placeholder="Last name (optional)" (keyup)="validationFun('lname')" [(ngModel)]="userModel.lastName">
+          <input type="text" name="lastName" autocomplete="on"  class="form-control" placeholder="Last name (optional)" (keyup)="validationFun('lname')" [(ngModel)]="userModel.lastName">
         </div>
         <p class="err">{{errorText.lname}}</p>
       </div>
@@ -58,7 +58,7 @@
           <span class="input-group-addon" style="color: green;">
             <i class="glyphicon glyphicon-envelope"></i>
           </span>
-          <input type="email" placeholder="email(required)" class="form-control" (keyup)="validationFun('email')" [(ngModel)]="userModel.email"
+          <input type="email"  name="userEmail" autocomplete="on" placeholder="email(required)" class="form-control" (keyup)="validationFun('email')" [(ngModel)]="userModel.email"
             autocomplete="on">
         </div>
         <p class="err">{{errorText.email}}</p>
@@ -140,7 +140,7 @@
           <span class="input-group-addon" style="color:red;">
             <i class="glyphicon glyphicon-lock"></i>
           </span>
-          <input type="email" placeholder="example@xyz.com(required)" class="form-control" [(ngModel)]="laterEmail">
+          <input type="email" name="userEmail" autocomplete="on" placeholder="example@xyz.com(required)" class="form-control" [(ngModel)]="laterEmail">
         </div>
         <p style="color: white">{{emailError}}</p>
       </div>

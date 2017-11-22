@@ -1,3 +1,4 @@
+import { CookieService } from './cookies.service';
 import { Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
@@ -8,7 +9,9 @@ export class HttpBase {
     protected option: any;
     private accessToken: any = '';
     private refreshToken: any = '';
-    constructor() {
+    public _cookieService: any;
+    constructor(_cookieSer: CookieService) {
+        this._cookieService = _cookieSer;
         this._url = environment.url;
         this._basicheader = new Headers({
             'Content-Type': 'application/json',
@@ -20,7 +23,15 @@ export class HttpBase {
             this.option = new RequestOptions({ headers: this._basicheader, method: 'post' });
             return this.option;
         } else {
-
+            if (!this.accessToken) {
+                this.retriveAccessToken();
+            }
+            const header = new Headers({
+                'Content-Type': 'application/json',
+                'auth_header': 'User ' + this.accessToken
+            });
+            const option = new RequestOptions({ headers: header, method: 'post' });
+            return option;
         }
     }
     getGetOption(token = false) {
@@ -28,16 +39,30 @@ export class HttpBase {
             this.option = new RequestOptions({ headers: this._basicheader, method: 'get' });
             return this.option;
         } else {
-            // this.token = 
+            if (!this.accessToken) {
+                this.retriveAccessToken();
+            }
+            const header = new Headers({
+                'Content-Type': 'application/json',
+                'auth_header': 'User ' + this.accessToken
+            });
+            const option = new RequestOptions({ headers: header, method: 'get' });
+            return option;
         }
     }
     extractData(res: Response) {
-        console.log('Data is: ', res);
         const body = res.json();
         return body.data || {};
     }
     handelError(err: Response) {
         const error = err.json();
         return Observable.throw(error);
+    }
+
+    retriveAccessToken() {
+        this.accessToken = this._cookieService.getCookie(environment.userCookie);
+        if (this.accessToken) {
+            this.accessToken = JSON.parse(this.accessToken).access_token;
+        }
     }
 }

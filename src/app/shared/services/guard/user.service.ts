@@ -8,13 +8,10 @@ export class UserService implements CanActivate {
   constructor(private _navigate: Router, private _cookieService: CookieService) { }
   canActivate() {
     const userDetails = this._cookieService.getCookie(environment.userCookie);
-    console.log('User cookie details: ', userDetails);
     if (!userDetails) {
-      alert('Not Found');
       this._navigate.navigate(['/errorpage']);
       return false;
     } else {
-      alert('Activate Run');
       return true;
     }
   }

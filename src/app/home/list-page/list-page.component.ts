@@ -1,3 +1,5 @@
+import { environment } from './../../../environments/environment';
+import { CookieService } from './../../shared/cookies.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,8 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list-page.component.css']
 })
 export class ListPageComponent implements OnInit {
-
-  constructor() { }
+  userDetails: any;
+  constructor(public _cookieService: CookieService) {
+  }
 
   ngOnInit() {
   }

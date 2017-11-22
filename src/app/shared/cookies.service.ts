@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 declare var document: any;
 
 @Injectable()
@@ -10,23 +11,21 @@ export class CookieService {
             const cookieValue = document.cookie.split(';');
             for (let i = 0; i < cookieValue.length; i++) {
                 let c = cookieValue[i];
-                while (c.charAt(0) == '') {
-                    c = c.substring(1, c.length);
-                }
                 if (c.indexOf(cookieName) == 0) {
-                    return JSON.parse(c.substring(cookieName.length, c.length));
+                    return c.substring(cookieName.length, c.length).trim();
                 }
             }
             return null;
         }
     }
-    setCookie(naem: any, value: any, expire: any = '') {
+    setCookie(name: any, value: any, expire: any) {
         let expires = '';
         if (expire) {
             let date = new Date();
             date.setTime(date.getTime() + (expire * 24 * 60 * 60 * 1000));
-            expires = '; expires: ' + date.toUTCString();
+            expires = '; expires= ' + date.toUTCString();
         }
-        document.cookie = name + '=' + value + expires + '; path=/';
+        value = name + '=' + JSON.stringify(value) + expires + ';  path=/';
+        document.cookie = value;
     }
 }

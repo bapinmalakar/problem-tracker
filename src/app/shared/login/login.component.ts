@@ -237,7 +237,7 @@ export class LoginComponent implements OnInit {
           console.log('Result is: ', result);
           self.verifyText = 'Verify';
           self.modelShow = false;
-          this._cookieService.getCookie(environment.userCookie);
+          this._cookieService.setCookie(environment.userCookie, result, 2);
           self.navigate.navigate(['home']);
         }, err => {
           console.log('Verify error: ', err);
@@ -347,6 +347,8 @@ export class LoginComponent implements OnInit {
           this.loginError = false;
           this.loginErr = '';
           this.loginText = 'Signin';
+          this._cookieService.setCookie(environment.userCookie, result, 2);
+          this.navigate.navigate(['home']);
         }, err => {
           this.loginError = true;
           if (err.error.code == 'E_USER_NOT_FOUND_ERROR' && err.error.message == 'Invalid username') {

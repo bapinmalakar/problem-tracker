@@ -4,11 +4,16 @@
       <a hraf="javascript:void(0)">
         <img src="../../../../../assets/images/title.gif" />
       </a>
-    </div> <!--Showing name of application -->
+    </div>
+    <!--Showing name of application -->
     <div style="float: left; width:30%;">
-      <p style="text-align: center;"><b>Biplab Malakar</b></p>
-    </div> <!--Showing user name -->
-    <div style="margin-left: 74%;">
+      <p style="text-align: center;">
+        <b>{{_userModelService.getUser()? _userModelService.getUser().first_name + ' ' + _userModelService.getUser().last_name:
+          'alias bob'}}</b>
+      </p>
+    </div>
+    <!--Showing user name -->
+    <div style="margin-left: 66%;">
       <a href="javascript:void(0)">
         <span class="glyphicon glyphicon-user">
           <b>Profile</b>
@@ -24,11 +29,12 @@
           <b>Setting</b>
         </span>
       </a>
-      <a href="javascript:void(0)" style="padding-left:9%;">
+      <a href="javascript:void(0)" style="padding-left:9%;" (click)="logout()">
         <span class="glyphicon glyphicon-log-out">
           <b>Logout</b>
         </span>
       </a>
-    </div>  <!--Showing option for action -->
+    </div>
+    <!--Showing option for action -->
   </div>
 </div>
