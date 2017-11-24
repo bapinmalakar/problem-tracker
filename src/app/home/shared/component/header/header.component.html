@@ -1,5 +1,5 @@
 <div class="containar">
-  <div style="width: 100%;background-color: orangered;">
+  <div class="options row">
     <div style="float: left; width: 30%;">
       <a hraf="javascript:void(0)">
         <img src="../../../../../assets/images/title.gif" />
@@ -36,5 +36,41 @@
       </a>
     </div>
     <!--Showing option for action -->
+  </div>
+  <div class="active-warning row"  *ngIf="!_userModelService.getUser()?.active">
+    <div>
+      <a class="warning-anchor" href="javascript:void(0)" style="margin-left: 2%;" (click)="verifyAccountModal()">
+        <i class="fa fa-asterisk"></i> Click here for
+        <b>verify your account</b>, either it will close after {{daysLeft!= 0? daysLeft: '__'}} days
+        <i class="fa fa-asterisk"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="outerDiv" *ngIf="modelShow">
+  <div class="innerDiv">
+    <div>
+      <span>
+        <i class="glyphicon glyphicon-remove-circle" (click)="closeModal()"></i>
+      </span>
+    </div>
+    <div>
+      <div class="form-group">
+        <h5>Enter activation pin send to your email</h5>
+        <div class="input-group">
+          <span class="input-group-addon" style="color:red;">
+            <i class="glyphicon glyphicon-lock"></i>
+          </span>
+          <input type="password" style="font-size: -webkit-xxx-large;" placeholder="6 character pin(required)" class="form-control"
+            [(ngModel)]="activePin">
+        </div>
+        <p style="color: white">{{pinError}}</p>
+      </div>
+      <button type="button" class="btn btn-info" [disabled]='verifyText == "Processing....." || resendText == "Sending....."'
+        (click)="verifyCode()">{{verifyText}}</button>
+      <button type="button" class="btn btn-danger" [disabled]='verifyText == "Processing....." || resendText == "Sending....."'
+        style="margin-left: 5%;" (click)="resendCode()">{{resendText}}</button>
+    </div>
   </div>
 </div>

@@ -1,3 +1,4 @@
+import { ServiceObserable } from './shared/services/serviceObserable.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -27,7 +28,7 @@ import { CookieService } from './shared/cookies.service';
     LoginComponent,
     DefaultPageComponent
   ],
-  providers: [UserService, UserModelService, UserAuthService, ValidationService, CookieService],
+  providers: [UserService, UserModelService, UserAuthService, ValidationService, CookieService, ServiceObserable],
   imports: [
     BrowserModule,
     FormsModule,

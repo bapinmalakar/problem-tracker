@@ -5,13 +5,15 @@ import { ListPageComponent } from './list-page/list-page.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SettingComponent } from './setting/setting.component';
 import { HeaderComponent } from './shared/component/header/header.component';
+import { FormsModule } from '@angular/forms';
 
 import { HomeRouteModule } from './homeroute.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    HomeRouteModule
+    HomeRouteModule,
+    FormsModule
   ],
   declarations: [HomeComponent, HeaderComponent, ListPageComponent, ProfileComponent, SettingComponent]
 })

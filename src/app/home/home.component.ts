@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
         .subscribe(result => {
           console.log('Result isss: ', result);
           this._userService.setUser(result);
+          console.log(typeof this._userService.getUser());
         }, err => {
           console.log('Error is: ', err);
         });

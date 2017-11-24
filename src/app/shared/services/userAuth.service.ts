@@ -6,10 +6,11 @@ import { environment } from '../../../environments/environment';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
+import { ServiceObserable } from './serviceObserable.service';
 @Injectable()
 export class UserAuthService extends HttpBase {
-    constructor(public _http: Http, public _cookieService: CookieService) {
-        super(_cookieService);
+    constructor(public _http: Http, public _cookieService: CookieService, _cookieUpdate: ServiceObserable) {
+        super(_cookieService, _cookieUpdate);
     }
     registerUser(data) {
         return this._http.post(this._url + environment.version + '/user/sign', data, this.getPostOption())

@@ -3,6 +3,7 @@ import { Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../environments/environment';
 import 'rxjs/add/observable/throw';
+import { ServiceObserable } from './services/serviceObserable.service';
 export class HttpBase {
     protected _url: any;
     protected _basicheader: any;
@@ -10,12 +11,21 @@ export class HttpBase {
     private accessToken: any = '';
     private refreshToken: any = '';
     public _cookieService: any;
-    constructor(_cookieSer: CookieService) {
+    public _cookieUpdate: any;
+    constructor(_cookieSer: CookieService, _cookieUpdate: ServiceObserable) {
         this._cookieService = _cookieSer;
+        this._cookieUpdate = _cookieUpdate;
         this._url = environment.url;
+        this.retriveToken(); // First time initialze token from cookie
         this._basicheader = new Headers({
             'Content-Type': 'application/json',
             'authorization': 'Basic ' + btoa(environment.app_secret_id + ':' + environment.app_secret_key)
+        });
+        this._cookieUpdate.cookieUpdate.subscribe(flag => {
+            if (flag) {
+                console.log('Run subscribe');
+                this.retriveToken();
+            }
         });
     }
     getPostOption(token = false) {
@@ -23,9 +33,6 @@ export class HttpBase {
             this.option = new RequestOptions({ headers: this._basicheader, method: 'post' });
             return this.option;
         } else {
-            if (!this.accessToken) {
-                this.retriveAccessToken();
-            }
             const header = new Headers({
                 'Content-Type': 'application/json',
                 'auth_header': 'User ' + this.accessToken
@@ -39,9 +46,6 @@ export class HttpBase {
             this.option = new RequestOptions({ headers: this._basicheader, method: 'get' });
             return this.option;
         } else {
-            if (!this.accessToken) {
-                this.retriveAccessToken();
-            }
             const header = new Headers({
                 'Content-Type': 'application/json',
                 'auth_header': 'User ' + this.accessToken
@@ -59,10 +63,12 @@ export class HttpBase {
         return Observable.throw(error);
     }
 
-    retriveAccessToken() {
-        this.accessToken = this._cookieService.getCookie(environment.userCookie);
-        if (this.accessToken) {
-            this.accessToken = JSON.parse(this.accessToken).access_token;
+    retriveToken() {
+        console.log('Run');
+        const tokens = this._cookieService.getCookie(environment.userCookie);
+        if (tokens) {
+            this.accessToken = JSON.parse(tokens).access_token;
+            this.refreshToken = JSON.parse(tokens).refresh_token;
         }
     }
 }

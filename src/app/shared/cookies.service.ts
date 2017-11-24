@@ -11,6 +11,9 @@ export class CookieService {
             const cookieValue = document.cookie.split(';');
             for (let i = 0; i < cookieValue.length; i++) {
                 let c = cookieValue[i];
+                while (c.indexOf(' ') == 0) {
+                    c = c.substring(1, c.length);
+                }
                 if (c.indexOf(cookieName) == 0) {
                     return c.substring(cookieName.length, c.length).trim();
                 }

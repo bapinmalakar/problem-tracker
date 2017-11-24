@@ -1,3 +1,4 @@
+import { ServiceObserable } from './../services/serviceObserable.service';
 import { User } from './../models/user';
 import { environment } from './../../../environments/environment';
 import { CookieService } from './../cookies.service';
@@ -37,10 +38,7 @@ export class LoginComponent implements OnInit {
   activePin = '';
   pinError = '';
   userId: any = '';
-  laterModelShow = false;
-  laterEmail = '';
   emailError = '';
-  laterSendText = 'Send Pin';
   errorText: any = {
     fname: '',
     lname: '',
@@ -50,11 +48,15 @@ export class LoginComponent implements OnInit {
     cpassword: ''
   };
   constructor(public _userAuthService: UserAuthService, public _validationService: ValidationService,
-    public navigate: Router, public _cookieService: CookieService) { }
+    public navigate: Router, public _cookieService: CookieService, public _cookieSet: ServiceObserable) { }
 
   ngOnInit() {
     this.initValue();
     this.refreshAcivateModel();
+    const data = this._cookieService.getCookie(environment.userCookie);
+    if (data) {
+      this.navigate.navigate(['home']);
+    }
   }
 
   register() {
@@ -202,12 +204,15 @@ export class LoginComponent implements OnInit {
       this.errorText.gender = 'Please select gender';
     }
   }
-  closeModal(val) {
-    if (val == 'V') {
-      this.modelShow = false;
-    } else if (val == 'L') {
-      this.laterModelShow = false;
+  closeModal() {
+    this.validation = false;
+    for (let key of this.userModel) {
+      this.userModel[key] = '';
     }
+    for (let key of this.errorText) {
+      this.errorText[key] = '';
+    }
+    this.modelShow = false;
   }
   resendCode() {
     this.resendText = 'Sending...';
@@ -237,7 +242,7 @@ export class LoginComponent implements OnInit {
           console.log('Result is: ', result);
           self.verifyText = 'Verify';
           self.modelShow = false;
-          this._cookieService.setCookie(environment.userCookie, result, 2);
+          this._cookieSet.setCookie(environment.userCookie, result, 2);
           self.navigate.navigate(['home']);
         }, err => {
           console.log('Verify error: ', err);
@@ -257,47 +262,11 @@ export class LoginComponent implements OnInit {
     this.resendText = 'Resend';
     this.pinError = '';
   }
-  laterModel() {
-    this.laterEmail = '';
-    this.emailError = '';
-    this.laterSendText = 'Send Pin';
-    this.laterModelShow = true;
-  }
   initValue() {
     this.loginValid = false;
     this.validation = false;
     this.modelShow = false;
     this.userId = '';
-    this.laterModelShow = false;
-    this.laterEmail = '';
-    this.emailError = '';
-    this.laterSendText = 'Send Pin';
-  }
-  sendActivatePin() {
-    if (!this.laterEmail) {
-      this.emailError = 'Enter register email';
-    } else if (this._validationService.emailValidation(this.laterEmail)) {
-      this.laterSendText = 'Processing...';
-      this.emailError = '';
-      let self = this;
-      this._userAuthService.laterActivatePin(this.laterEmail)
-        .subscribe(result => {
-          console.log('Result is: ', result);
-          self.laterSendText = 'Send Pin';
-          self.laterModelShow = false;
-          self.modelShow = true;
-          self.userId = result._id;
-          self.refreshAcivateModel();
-        }, err => {
-          console.log('Error: ', err);
-          if (err.error.code === 'E_USER_NOT_FOUND_ERROR') {
-            self.emailError = 'This email not valid!';
-          }
-          self.laterSendText = 'Send Pin';
-        });
-    } else {
-      this.emailError = 'Enter valid email please';
-    }
   }
   loginEmail() {
     if (this.loginValid) {
@@ -347,7 +316,7 @@ export class LoginComponent implements OnInit {
           this.loginError = false;
           this.loginErr = '';
           this.loginText = 'Signin';
-          this._cookieService.setCookie(environment.userCookie, result, 2);
+          this._cookieSet.setCookie(environment.userCookie, result, 2);
           this.navigate.navigate(['home']);
         }, err => {
           this.loginError = true;
