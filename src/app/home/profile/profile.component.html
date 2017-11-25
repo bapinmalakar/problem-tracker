@@ -1,16 +1,61 @@
 <div>
   <div class="col-sm-4 ">
     <div class="avatar">
-      <img src="{{_userModelService.getUser()?.profile_image? _userModelService.getUser().profile_image:'../../../assets/images/profileimage.jpg'}}" class="img-rounded img-responsive" alt="profile_image" />
+      <img src="{{_userModelService.getUser()?.profile_image? _userModelService.getUser().profile_image:'../../../assets/images/profileimage.jpg'}}"
+        class="img-rounded img-responsive" alt="profile_image" />
       <a class="uploadBtn" href="javascript:void(0)" (click)="uploadImage()">
         <i class="fa fa-cloud-upload"> upload</i>
       </a>
-      <img class="img-rounded img-responsive loading" *ngIf="loadingImg" src="../../../assets/images/loading.gif"
-        alt="loading" />
+      <img class="img-rounded img-responsive loading" *ngIf="loadingImg" src="../../../assets/images/loading.gif" alt="loading"
+      />
     </div>
 
   </div>
   <div class="col-sm-7">
-    <h1>Profile editor</h1>
+    <h1 class="row editor_headline">Profile editor</h1>
+    <div class="row editor_body" style="margin-top: 3%;">
+      <div class="data">
+        <input class="identifier" type="email" value="biplab.x@gmail.com" placeholder="my register email" />
+      </div>
+
+      <div class="data">
+        <input class="identifier" type="email" placeholder="my register mobile number 98XXXXXXXX" />
+      </div>
+      <div class="data">
+        <h4 style="border-top: solid;border-color: darkcyan;">Address</h4>
+        <div class="row" style="padding-left: 7%;">
+          <h5>
+            <b>Country: INDIA</b>
+          </h5>
+          <input class="address" type="text" placeholder="my state" />
+          <br>
+          <br>
+          <input class="address" type="text" placeholder="my city" />
+          <br>
+          <br>
+          <textarea class="address" placeholder="my area description"></textarea>
+        </div>
+        <h4 style="padding-left: 4%;">
+          <span class="badge save">Save</span>
+        </h4>
+        <h4 style="padding-left: 2%;">
+          <span class="badge cancel">Cancel</span>
+        </h4>
+      </div>
+      <div class="data">
+        <h4 style="border-top: solid;border-color: darkcyan;">About me</h4>
+        <div style="margin-left: 4%;">
+          <textarea class="address" placeholder="self description"></textarea>
+        </div>
+        <div>
+            <h4 style="padding-left: 4%;">
+              <span class="badge save">Save</span>
+            </h4>
+            <h4 style="padding-left: 2%;">
+              <span class="badge cancel">Cancel</span>
+            </h4>
+          </div>
+      </div>
+    </div>
   </div>
 </div>

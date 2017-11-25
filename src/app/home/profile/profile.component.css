@@ -33,3 +33,51 @@ img{
     margin-top: -82px;
     overflow: hidden;
 }
+.editor_headline{
+    text-decoration: overline;
+    text-shadow: 3px 14px 29px orangered;
+}
+input{
+    outline: none;
+    border-bottom: solid;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    overflow: hidden;
+    text-align: center;
+}
+input.identifier{
+    width: 67%;
+}
+input.address{
+    width: 50%;
+}
+textarea.address{
+    width: 50%;
+    height: 80px;
+    background: antiquewhite;
+    font-stretch: extra-condensed;
+}
+div.data{
+    padding-top: 4.5%;
+}
+h4{
+    display: inline-block;
+}
+h4 span{
+    cursor: pointer;
+}
+h4 span.save{
+    height: 21px;
+    background: darkolivegreen;
+    color: cadetblue;
+    font-size: initial;
+    font-weight: bold
+}
+h4 span.cancel{
+    height: 21px;
+    font-size: initial;
+    background: darkred;
+    color: black;
+    font-weight: bold
+}
