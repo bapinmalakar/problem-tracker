@@ -54,6 +54,19 @@ export class HttpBase {
             return option;
         }
     }
+    getPutOptions(token = false) {
+        if (!token) {
+            this.option = new RequestOptions({ headers: this._basicheader, method: 'put' });
+            return this.option;
+        } else {
+            const header = new Headers({
+                'Content-Type': 'application/json',
+                'auth_header': 'User ' + this.accessToken
+            });
+            const option = new RequestOptions({ headers: header, method: 'put' });
+            return option;
+        }
+    }
     extractData(res: Response) {
         const body = res.json();
         return body.data || {};
@@ -62,7 +75,6 @@ export class HttpBase {
         const error = err.json();
         return Observable.throw(error);
     }
-
     retriveToken() {
         console.log('Run');
         const tokens = this._cookieService.getCookie(environment.userCookie);

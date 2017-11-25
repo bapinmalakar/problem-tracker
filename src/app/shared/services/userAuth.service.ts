@@ -1,8 +1,8 @@
+import { environment } from './../../../environments/environment';
 import { CookieService } from './../cookies.service';
 import { Injectable } from '@angular/core';
 import { HttpBase } from './../httpBase';
 import { Http, Headers } from '@angular/http';
-import { environment } from '../../../environments/environment';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/catch';
@@ -44,6 +44,11 @@ export class UserAuthService extends HttpBase {
     }
     logout(id) {
         return this._http.get(this._url + environment.version + '/user/' + id + '/log_out')
+            .map(this.extractData)
+            .catch(this.handelError);
+    }
+    uploadImage(id, data) {
+        return this._http.put(this._url + environment.version + '/user/' + id + '/update_image', data, this.getPutOptions(true))
             .map(this.extractData)
             .catch(this.handelError);
     }

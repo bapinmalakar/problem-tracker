@@ -1,0 +1,35 @@
+.avatar {
+    border: solid;
+    width: 179px;
+    height: 153px;
+    border-color: aliceblue;
+    border-radius: 290px;
+    margin-top: 4px;
+    box-sizing: border-box;
+    box-shadow: -5px 19px 64px black;
+}
+img{
+    width: 100%;
+    height: 100%;
+    border-radius: 96px;
+    position: relative;
+}
+.uploadBtn{
+    display: none;
+    position: absolute;
+    margin-top: -6%;
+    margin-left: 14%;
+    overflow: hidden;
+}
+.avatar:hover .uploadBtn{
+    display: block !important;
+    color: #fff;
+}
+.loading{
+    width: 22px;
+    height: 21px;
+    position: absolute;
+    margin-left: 27%;
+    margin-top: -82px;
+    overflow: hidden;
+}

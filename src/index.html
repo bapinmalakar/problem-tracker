@@ -14,9 +14,54 @@
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+<style>
+  .errorToast {
+    position: absolute;
+    width: 285px;
+    bottom: 0.5%;
+    height: 70px;
+    margin-left: 1%;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 11px -8px 57px darkgreen;
+    border-radius: 17px;
+    background-color: crimson;
+    text-align: center;
+  }
+
+  .errorText {
+    font-size: medium;
+    font-stretch: ultra-expanded;
+    color: white;
+    font-family: cursive;
+  }
+
+  #errormsg {
+    color: black;
+    font-size: small;
+  }
+</style>
+<script>
+  window.errorToast = function openError(msg) {
+    $('#errorDiv').show();
+    $('#errormsg').text(msg);
+    setTimeout(() => {
+      $('#errorDiv').hide();
+    }, 3000);
+  }
+</script>
+
 
 <body>
   <pt-root></pt-root>
+  <div id="errorDiv" class="errorToast" style="display: none;">
+    <span class="errorText">
+      <b>Error</b>
+    </span>
+    <b>
+      <p id="errormsg"></p>
+    </b>
+  </div>
 </body>
 
 </html>
