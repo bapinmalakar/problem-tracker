@@ -11,11 +11,20 @@
     </div>
 
   </div>
-  <div class="col-sm-7">
+  <div class="col-sm-7" *ngIf="_userModelService.getUser()">
     <h1 class="row editor_headline">Profile editor</h1>
     <div class="row editor_body" style="margin-top: 3%;">
       <div class="data">
-        <input class="identifier" type="email" value="biplab.x@gmail.com" placeholder="my register email" />
+        <input class="identifier" type="email" value="biplab.x@gmail.com" placeholder="my register email" [disabled]="!editEmail"
+          [(ngModel)]="_userModelService.getUser().email" />
+        <span class="edit">
+          <b>
+            <i class="fa fa-pencil-square-o" *ngIf="!editEmail" title="edit email" (click)="editEmail= !editEmail; _userModelService.getUser().email=''"></i>
+            <i *ngIf="editEmail" class="fa fa-floppy-o" title="edit email" (click)="verifyEmail()"></i>
+            <i *ngIf="editEmail" class="fa fa-times" aria-hidden="true" title="cancel update" (click)="cancelEmailUpdate()"></i>
+          </b>
+        </span>
+        <p class="err">{{updateData.emailErr}}</p>
       </div>
 
       <div class="data">
@@ -27,35 +36,63 @@
           <h5>
             <b>Country: INDIA</b>
           </h5>
-          <input class="address" type="text" placeholder="my state" />
+          <input class="address" type="text" placeholder="my state" [(ngModel)]="updateData.state" (keyup)="checkStateAndCityAndDescription('state')"
+          />
+          <p class="err">{{updateData.stateerr}}</p>
           <br>
           <br>
-          <input class="address" type="text" placeholder="my city" />
-          <br>
-          <br>
-          <textarea class="address" placeholder="my area description"></textarea>
+          <input class="address" type="text" placeholder="my city" [(ngModel)]="updateData.city" (keyup)="checkStateAndCityAndDescription('city')"
+          />
+          <p class="err">{{updateData.cityerr}}</p>
         </div>
         <h4 style="padding-left: 4%;">
-          <span class="badge save">Save</span>
+          <span class="badge save" (click)="saveAddress()">Save</span>
         </h4>
         <h4 style="padding-left: 2%;">
-          <span class="badge cancel">Cancel</span>
+          <span class="badge cancel" (click)="cancle('address')">Cancel</span>
         </h4>
       </div>
       <div class="data">
         <h4 style="border-top: solid;border-color: darkcyan;">About me</h4>
         <div style="margin-left: 4%;">
-          <textarea class="address" placeholder="self description"></textarea>
+          <textarea class="address" placeholder="self description. Minimum 100 character" [(ngModel)]="updateData.description" (keyup)="checkStateAndCityAndDescription('description')"></textarea>
+          <p class="err">{{updateData.deserr}}</p>
         </div>
         <div>
-            <h4 style="padding-left: 4%;">
-              <span class="badge save">Save</span>
-            </h4>
-            <h4 style="padding-left: 2%;">
-              <span class="badge cancel">Cancel</span>
-            </h4>
-          </div>
+          <h4 style="padding-left: 4%;">
+            <span class="badge save" (click)="descriptionUpdate()">Save</span>
+          </h4>
+          <h4 style="padding-left: 2%;">
+            <span class="badge cancel" (click)="cancle('des')">Cancel</span>
+          </h4>
+        </div>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="outerDiv" *ngIf="modelShow">
+  <div class="innerDiv">
+    <div>
+      <span>
+        <i class="glyphicon glyphicon-remove-circle" (click)="closeModal()"></i>
+      </span>
+    </div>
+    <div>
+      <div class="form-group">
+        <h5>Enter verification pin send to your email</h5>
+        <div class="input-group">
+          <span class="input-group-addon" style="color:red;">
+            <i class="glyphicon glyphicon-lock"></i>
+          </span>
+          <input type="password" style="font-size: -webkit-xxx-large;" placeholder="6 character pin(required)" class="form-control"
+            [(ngModel)]="activePin">
+        </div>
+        <p style="color: white">{{pinError}}</p>
+      </div>
+      <button type="button" class="btn btn-info" (click)="verifyCode()">Verify</button>
+      <button type="button" class="btn btn-danger" style="margin-left: 5%;" (click)="resendCode()">Resend</button>
     </div>
   </div>
 </div>

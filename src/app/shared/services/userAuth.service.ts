@@ -52,4 +52,26 @@ export class UserAuthService extends HttpBase {
             .map(this.extractData)
             .catch(this.handelError);
     }
+    updateAddress(id, data) {
+        return this._http.put(this._url + environment.version + '/user/' + id + '/update_address',
+            { address: data }, this.getPutOptions(true))
+            .map(this.extractData)
+            .catch(this.handelError);
+    }
+    updateDescription(id, data) {
+        return this._http.put(this._url + environment.version + '/user/' + id + '/update_description', data, this.getPutOptions(true))
+            .map(this.extractData)
+            .catch(this.handelError);
+    }
+    emailVerify(id, email) {
+        return this._http.put(this._url + environment.version + '/user/' + id + '/verify_email/' + email, {}, this.getPutOptions(true))
+            .map(this.extractData)
+            .catch(this.handelError);
+    }
+    emailUpdate(id, email, pin) {
+        return this._http.put(this._url + environment.version + '/user/' + id + '/update_email/' + pin + '/' + email, {},
+            this.getPutOptions(true))
+            .map(this.extractData)
+            .catch(this.handelError);
+    }
 }

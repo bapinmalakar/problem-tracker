@@ -21,4 +21,7 @@ export class ValidationService {
         else
             return 3;
     }
+    validAlphaSpace(data) {
+        return /^[a-zA-Z ]*$/.test(data);
+    }
 }
