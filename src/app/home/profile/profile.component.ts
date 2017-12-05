@@ -187,7 +187,6 @@ export class ProfileComponent implements OnInit {
       this.emailValidation = false;
       this._userAuthService.emailVerify(this._userModelService.getUser()._id, this._userModelService.getUser().email)
         .subscribe(result => {
-          console.log('Result: ', result);
           this.modelShow = true;
         }, err => {
           console.log('Error: ', err);

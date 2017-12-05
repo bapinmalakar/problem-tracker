@@ -1,0 +1,20 @@
+.postBody{
+    border: solid;
+    margin-left: 2%;
+    width: 80%;
+    margin-top: 1%;
+    border-color: cadetblue;
+    box-sizing: border-box;
+    box-shadow: -4px 16px 67px #000;
+}
+.caption{
+    width: 90%;
+    margin-left: 4%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    outline: none;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-bottom: #fff12f;
+}
